@@ -75,7 +75,7 @@ public class CrnkTestApplicationTest {
     // -----------------------------------------------------------------------------------------------------------------
     /*
         When we have resources with following properties:
-            - CyclicResourceA has relation to Resource C (and vice versa)
+            - CyclicResourceA has relation to CyclicResourceC (and vice versa)
             - CyclicResourceASub1 (subclass of CyclicResourceA) has relation to CyclicResourceB (and vice versa)
             - CyclicResourceB has relation to CyclicResourceC (and vice versa)
 

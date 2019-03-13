@@ -23,8 +23,9 @@ the relation in the derived resource class)
     at io.crnk.rs.CrnkFilter.filter(CrnkFilter.java:49)
         ...
  
-The problem is demonstrated with 'testInheritedRelation' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java)
+The problem is demonstrated with 'testInheritedRelation' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java).
 
+Reported as https://github.com/crnk-project/crnk-framework/issues/480
 
 Cyclic reference problem
 ------------------------
@@ -33,6 +34,7 @@ In this case we have following setup:
 
    - CyclicResourceA contains relation to CyclicResourceC (and vice versa)
    - CyclicResourceASub1 derived from CyclicResourceA contains relation to CyclicResourceB (and vice versa)
+   - CyclicResourceB contains relation to CyclicResourceC (and vice versa)
 
 Now trying to create repository for CyclicResourceA from CrnkClient results an exception:
 
@@ -60,3 +62,5 @@ Now trying to create repository for CyclicResourceA from CrnkClient results an e
             ...   
 
 The problem is demonstrated with 'testCyclicRelationsRepository' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java)
+
+Reported as https://github.com/crnk-project/crnk-framework/issues/481
