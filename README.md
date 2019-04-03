@@ -73,3 +73,5 @@ RelatedResouceASub1 via field on RelatedResourceB, filtering is dropped before r
 result filtering doesn't get applied.
 
 The problem is demonstrated with 'testFilteringViaInheritedRelation' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java)
+
+Reported as https://github.com/crnk-project/crnk-framework/issues/489
