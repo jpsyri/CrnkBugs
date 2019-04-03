@@ -5,8 +5,8 @@ Tests cases can be executed with
     
     ./gradlew test
     
-Inherited relation problem
---------------------------
+Inherited relation problem (Fixed)
+----------------------------------
 
 In case resource derived from parent resource contains relation, links for those relations are included in the JSON 
 responses for those resources. However requests to those links result in exception ('related-resource-b' is name of 
@@ -27,8 +27,8 @@ The problem is demonstrated with 'testInheritedRelation' test at [CrnkTestApplic
 
 Reported as https://github.com/crnk-project/crnk-framework/issues/480
 
-Cyclic reference problem
-------------------------
+Cyclic reference problem (Fixed)
+--------------------------------
 
 In this case we have following setup: 
 
@@ -64,3 +64,12 @@ Now trying to create repository for CyclicResourceA from CrnkClient results an e
 The problem is demonstrated with 'testCyclicRelationsRepository' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java)
 
 Reported as https://github.com/crnk-project/crnk-framework/issues/481
+
+Filtering via inherited relation problem
+----------------------------------------
+
+In this case we have subclass RelatedResourceASub1 containing relation to RelatedResouceB. If we try to filter list of 
+RelatedResouceASub1 via field on RelatedResourceB, filtering is dropped before request gets to the Repository (`QuerySpec.getFilters()` returns empty list). As a
+result filtering doesn't get applied.
+
+The problem is demonstrated with 'testFilteringViaInheritedRelation' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java)

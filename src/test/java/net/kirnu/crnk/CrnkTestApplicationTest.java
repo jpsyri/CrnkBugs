@@ -8,7 +8,11 @@ import net.kirnu.crnk.resources.related.RelatedResourceA;
 import net.kirnu.crnk.resources.related.RelatedResourceAsub1;
 
 import io.crnk.client.CrnkClient;
+import io.crnk.core.queryspec.FilterOperator;
+import io.crnk.core.queryspec.FilterSpec;
+import io.crnk.core.queryspec.PathSpec;
 import io.crnk.core.queryspec.QuerySpec;
+import io.crnk.core.resource.list.ResourceList;
 import io.dropwizard.testing.junit.DropwizardClientRule;
 
 import static org.junit.Assert.*;
@@ -115,5 +119,33 @@ public class CrnkTestApplicationTest {
         CrnkClient client = new CrnkClient(clientRule.baseUri().toString());
         CrnkTestApplication.configureObjectMapper(client.getObjectMapper());
         return client;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+
+    /*
+        Subclass RelatedResourceAsub1 has reference to related class RelatedResourceB. We try to filter list of subclasses
+        by field in the related class. That filtering isn't applied. Checking at RelatedResourceARepository reveals that
+        no filtering is included on the QuerySpec there.
+     */
+
+    @Test
+    public void testFilteringViaInheritedRelation() {
+        CrnkClient client = getCrnkClient();
+
+        QuerySpec querySpec = new QuerySpec(RelatedResourceAsub1.class);
+        querySpec.addFilter(
+            new FilterSpec(
+                PathSpec.of("relatedResourceBS", "id"),
+                FilterOperator.EQ,
+                10L
+            )
+        );
+        ResourceList<RelatedResourceAsub1> result = client.getRepositoryForType(RelatedResourceAsub1.class).findAll(
+            querySpec
+        );
+
+        assertEquals(1, result.size());
     }
 }

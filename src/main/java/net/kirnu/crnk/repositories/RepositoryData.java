@@ -19,13 +19,16 @@ public class RepositoryData {
         RelatedResourceAsub1 relatedResourceAsub1 = new RelatedResourceAsub1();
         relatedResourceAsub1.setId(1L);
 
+        RelatedResourceAsub1 relatedResourceAsub2 = new RelatedResourceAsub1();
+        relatedResourceAsub2.setId(2L);
+
         RelatedResourceB relatedResourceB = new RelatedResourceB();
         relatedResourceB.setId(10L);
 
         relatedResourceAsub1.setRelatedResourceBS(Collections.singletonList(relatedResourceB));
         relatedResourceB.setRelatedResourceAsub1(relatedResourceAsub1);
 
-        RESOURCE_A_LIST = Collections.singletonList(relatedResourceAsub1);
+        RESOURCE_A_LIST = Collections.unmodifiableList(Arrays.asList(relatedResourceAsub1, relatedResourceAsub2));
         RESOURCE_B_LIST = Collections.singletonList(relatedResourceB);
     }
 }
