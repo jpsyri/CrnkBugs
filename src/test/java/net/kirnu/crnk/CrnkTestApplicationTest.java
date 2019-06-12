@@ -4,6 +4,7 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import net.kirnu.crnk.resources.cyclic.CyclicResourceA;
+import net.kirnu.crnk.resources.ordered.OrderedResource;
 import net.kirnu.crnk.resources.related.RelatedResourceA;
 import net.kirnu.crnk.resources.related.RelatedResourceAsub1;
 
@@ -12,6 +13,7 @@ import io.crnk.core.queryspec.FilterOperator;
 import io.crnk.core.queryspec.FilterSpec;
 import io.crnk.core.queryspec.PathSpec;
 import io.crnk.core.queryspec.QuerySpec;
+import io.crnk.core.queryspec.pagingspec.NumberSizePagingSpec;
 import io.crnk.core.resource.list.ResourceList;
 import io.dropwizard.testing.junit.DropwizardClientRule;
 
@@ -147,5 +149,44 @@ public class CrnkTestApplicationTest {
         );
 
         assertEquals(1, result.size());
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+
+    /*
+        Trying to use NumberSizePagingSpec with the client leads to ClassCastException
+
+        io.crnk.core.queryspec.pagingspec.NumberSizePagingSpec cannot be cast to io.crnk.core.queryspec.pagingspec.OffsetLimitPagingSpec
+        java.lang.ClassCastException: io.crnk.core.queryspec.pagingspec.NumberSizePagingSpec cannot be cast to io.crnk.core.queryspec.pagingspec.OffsetLimitPagingSpec
+            at io.crnk.core.queryspec.pagingspec.OffsetLimitPagingBehavior.serialize(OffsetLimitPagingBehavior.java:15)
+            at io.crnk.core.queryspec.mapper.DefaultQuerySpecUrlMapper.serialize(DefaultQuerySpecUrlMapper.java:289)
+            at io.crnk.core.queryspec.mapper.DefaultQuerySpecUrlMapper.serialize(DefaultQuerySpecUrlMapper.java:242)
+            at io.crnk.core.engine.internal.utils.JsonApiUrlBuilder.buildUrlInternal(JsonApiUrlBuilder.java:87)
+            at io.crnk.core.engine.internal.utils.JsonApiUrlBuilder.buildUrl(JsonApiUrlBuilder.java:45)
+            at io.crnk.core.engine.internal.utils.JsonApiUrlBuilder.buildUrl(JsonApiUrlBuilder.java:36)
+            at io.crnk.client.internal.ResourceRepositoryStubImpl.findAll(ResourceRepositoryStubImpl.java:122)
+            at io.crnk.client.internal.ResourceRepositoryStubImpl.findAll(ResourceRepositoryStubImpl.java:26)
+            at net.kirnu.crnk.CrnkTestApplicationTest.testNumberSizePaging(CrnkTestApplicationTest.java:168)
+            ...
+     */
+    @Test
+    public void testNumberSizePaging() {
+        CrnkClient client = getCrnkClient();
+
+        QuerySpec querySpec = new QuerySpec(OrderedResource.class);
+        querySpec.setPaging(
+            new NumberSizePagingSpec(
+                1,
+                2
+            )
+        );
+
+        ResourceList<OrderedResource> result = client.getRepositoryForType(OrderedResource.class).findAll(
+            querySpec
+        );
+
+        // As page size is 2, we should only get 2 results
+        assertEquals(2, result.size());
     }
 }

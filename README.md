@@ -75,3 +75,22 @@ result filtering doesn't get applied.
 The problem is demonstrated with 'testFilteringViaInheritedRelation' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java)
 
 Reported as https://github.com/crnk-project/crnk-framework/issues/489
+
+Using NumberSizePagingSpec with CrnkClient
+------------------------------------------
+
+Using NumberSizePagingSpec with CrnkCient leade to `ClassCastEception`
+
+    io.crnk.core.queryspec.pagingspec.NumberSizePagingSpec cannot be cast to io.crnk.core.queryspec.pagingspec.OffsetLimitPagingSpec
+    java.lang.ClassCastException: io.crnk.core.queryspec.pagingspec.NumberSizePagingSpec cannot be cast to io.crnk.core.queryspec.pagingspec.OffsetLimitPagingSpec
+        at io.crnk.core.queryspec.pagingspec.OffsetLimitPagingBehavior.serialize(OffsetLimitPagingBehavior.java:15)
+        at io.crnk.core.queryspec.mapper.DefaultQuerySpecUrlMapper.serialize(DefaultQuerySpecUrlMapper.java:289)
+        at io.crnk.core.queryspec.mapper.DefaultQuerySpecUrlMapper.serialize(DefaultQuerySpecUrlMapper.java:242)
+        at io.crnk.core.engine.internal.utils.JsonApiUrlBuilder.buildUrlInternal(JsonApiUrlBuilder.java:87)
+        at io.crnk.core.engine.internal.utils.JsonApiUrlBuilder.buildUrl(JsonApiUrlBuilder.java:45)
+        at io.crnk.core.engine.internal.utils.JsonApiUrlBuilder.buildUrl(JsonApiUrlBuilder.java:36)
+        at io.crnk.client.internal.ResourceRepositoryStubImpl.findAll(ResourceRepositoryStubImpl.java:122)
+        at io.crnk.client.internal.ResourceRepositoryStubImpl.findAll(ResourceRepositoryStubImpl.java:26)
+        at net.kirnu.crnk.CrnkTestApplicationTest.testNumberSizePaging(CrnkTestApplicationTest.java:168)
+
+The problem is demonstrated with 'testNumberSizePaging' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java)

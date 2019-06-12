@@ -3,6 +3,7 @@ package net.kirnu.crnk;
 import net.kirnu.crnk.repositories.cyclic.CyclicResourceARepository;
 import net.kirnu.crnk.repositories.cyclic.CyclicResourceBRespository;
 import net.kirnu.crnk.repositories.cyclic.CyclicResourceCRepository;
+import net.kirnu.crnk.repositories.ordered.OrderedResourceRepository;
 import net.kirnu.crnk.repositories.related.RelatedResourceARepository;
 import net.kirnu.crnk.repositories.related.RelatedResourceBRepository;
 
@@ -36,6 +37,7 @@ public class CrnkTestApplication extends Application<CrnkTestApplicationConfig> 
         crnkModule.addRepository(new CyclicResourceCRepository());
         crnkModule.addRepository(new RelatedResourceARepository());
         crnkModule.addRepository(new RelatedResourceBRepository());
+        crnkModule.addRepository(new OrderedResourceRepository());
 
         CrnkFeature crnkFeature = new CrnkFeature();
         crnkFeature.addModule(crnkModule);

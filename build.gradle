@@ -21,7 +21,7 @@ repositories {
 }
 
 def dropwizardVersion = '1.3.9'
-def crnkVersion = '2.12.20190325092638'
+def crnkVersion = '3.0.20190606072637-BETA'
 
 dependencies {
     implementation group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
