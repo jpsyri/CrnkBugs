@@ -94,3 +94,5 @@ Using NumberSizePagingSpec with CrnkCient leade to `ClassCastEception`
         at net.kirnu.crnk.CrnkTestApplicationTest.testNumberSizePaging(CrnkTestApplicationTest.java:168)
 
 The problem is demonstrated with 'testNumberSizePaging' test at [CrnkTestApplicationTest.java](src/test/java/net/kirnu/crnk/CrnkTestApplicationTest.java)
+
+Reported as https://github.com/crnk-project/crnk-framework/issues/526
